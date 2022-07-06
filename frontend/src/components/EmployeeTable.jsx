@@ -18,6 +18,7 @@ import KeyboardArrowLeft from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
 import LastPageIcon from "@mui/icons-material/LastPage";
 import { FaTrashAlt, FaRegEdit } from "react-icons/fa";
+import ActionModal from "./ActionModal";
 
 function EmployeeTable(props) {
   const theme = useTheme();
@@ -159,12 +160,15 @@ export default function CustomPaginationActionsTable() {
               <TableCell>{row.login}</TableCell>
               <TableCell>{row.salary}</TableCell>
               <TableCell>
-                <Button>
+                <ActionModal />
+                {/* <Button>
+                  <ActionModal />
                   <FaRegEdit />
                 </Button>
                 <Button>
+                  <ActionModal />
                   <FaTrashAlt />
-                </Button>
+                </Button> */}
               </TableCell>
             </TableRow>
           ))}

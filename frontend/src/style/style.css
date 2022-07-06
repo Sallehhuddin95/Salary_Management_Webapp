@@ -18,10 +18,29 @@ td {
 }
 
 /* filter */
+.filter-div {
+  width: 80% !important;
+}
+
 .salary-input {
   margin: 1em !important;
 }
 
 #SearchBtn {
+  margin: auto;
+}
+
+/* form */
+.modal-form-div {
+  display: flex;
+  flex-direction: row;
+}
+
+.modal-form-div > button {
+  width: 2em;
+}
+
+.modal-form-div > h3 {
+  text-align: center;
   margin: auto;
 }

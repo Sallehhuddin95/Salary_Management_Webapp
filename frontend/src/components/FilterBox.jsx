@@ -12,7 +12,10 @@ import { Button } from "@mui/material";
 export default function FilterBox() {
   return (
     <Box sx={{ "& > :not(style)": { m: 1 } }}>
-      <Box sx={{ display: "flex", alignItems: "flex-end" }}>
+      <Box
+        sx={{ display: "flex", alignItems: "flex-end" }}
+        className="filter-div"
+      >
         <Button id="SearchBtn" className="search-btn">
           <FaSearch sx={{ color: "action.active", mr: 1, my: 0.5 }} />
         </Button>
