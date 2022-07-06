@@ -10,8 +10,10 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import { FaFileUpload, FaCloudDownloadAlt } from "react-icons/fa";
+import { requirePropFactory } from "@mui/material";
 
 const drawerWidth = 240;
+const profilePic = require("../images/avatar_profile_icon.png");
 
 export default function Sidebar() {
   return (
@@ -29,12 +31,12 @@ export default function Sidebar() {
     >
       {/* <Toolbar /> */}
 
-      <Card sx={{ maxWidth: 345 }}>
+      <Card sx={{ maxWidth: 345 }} className="profile-div">
         <CardMedia
           className="profile-img"
           component="img"
           height="140"
-          image="/static/images/cards/contemplative-reptile.jpg"
+          image={profilePic}
           alt="profile picture"
         />
         <CardContent>

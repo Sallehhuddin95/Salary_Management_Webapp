@@ -6,28 +6,36 @@ import InputAdornment from "@mui/material/InputAdornment";
 import FormControl from "@mui/material/FormControl";
 import TextField from "@mui/material/TextField";
 import AccountCircle from "@mui/icons-material/AccountCircle";
+import { FaSearch } from "react-icons/fa";
+import { Button } from "@mui/material";
 
 export default function FilterBox() {
   return (
     <Box sx={{ "& > :not(style)": { m: 1 } }}>
       <Box sx={{ display: "flex", alignItems: "flex-end" }}>
-        <AccountCircle sx={{ color: "action.active", mr: 1, my: 0.5 }} />
+        <Button id="SearchBtn" className="search-btn">
+          <FaSearch sx={{ color: "action.active", mr: 1, my: 0.5 }} />
+        </Button>
+
         <TextField
-          id="input-with-sx"
+          id="MinSalary"
+          className="salary-input"
           label="Minimum salary"
           variant="standard"
           placeholder="Enter amount"
         />
-      </Box>
-      <Box sx={{ display: "flex", alignItems: "flex-end" }}>
-        <AccountCircle sx={{ color: "action.active", mr: 1, my: 0.5 }} />
         <TextField
-          id="input-with-sx"
+          id="MaxSalary"
+          className="salary-input"
           label="Maximum salary"
           variant="standard"
           placeholder="Enter amount"
         />
       </Box>
+      {/* <Box sx={{ display: "flex", alignItems: "flex-end" }}> */}
+      {/* <AccountCircle sx={{ color: "action.active", mr: 1, my: 0.5 }} /> */}
+
+      {/* </Box> */}
     </Box>
   );
 }

@@ -1,6 +1,7 @@
 import * as React from "react";
 import PropTypes from "prop-types";
 import { useTheme } from "@mui/material/styles";
+import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -16,6 +17,7 @@ import FirstPageIcon from "@mui/icons-material/FirstPage";
 import KeyboardArrowLeft from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
 import LastPageIcon from "@mui/icons-material/LastPage";
+import { FaTrashAlt, FaRegEdit } from "react-icons/fa";
 
 function EmployeeTable(props) {
   const theme = useTheme();
@@ -104,7 +106,7 @@ const rows = [
   createData("10", "JOHN", 0, 2000, "del"),
   createData("11", "JOHN", 19.0, 2000, "del"),
   createData("1", "JOHN", 18.0, 2000, "del"),
-].sort((a, b) => (a.calories < b.calories ? -1 : 1));
+].sort((a, b) => (a.salary < b.salary ? -1 : 1));
 
 export default function CustomPaginationActionsTable() {
   const [page, setPage] = React.useState(0);
@@ -156,7 +158,14 @@ export default function CustomPaginationActionsTable() {
               <TableCell>{row.name}</TableCell>
               <TableCell>{row.login}</TableCell>
               <TableCell>{row.salary}</TableCell>
-              <TableCell>{row.action}</TableCell>
+              <TableCell>
+                <Button>
+                  <FaRegEdit />
+                </Button>
+                <Button>
+                  <FaTrashAlt />
+                </Button>
+              </TableCell>
             </TableRow>
           ))}
 

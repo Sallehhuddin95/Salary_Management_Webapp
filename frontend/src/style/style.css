@@ -1,3 +1,27 @@
+/* Profile */
 .profile-img {
   border-radius: 50%;
+  width: 20% !important;
+  height: auto;
+  margin: auto;
+}
+
+.profile-div {
+  margin-top: 1.5em;
+}
+
+/* table */
+
+th,
+td {
+  text-align: center !important;
+}
+
+/* filter */
+.salary-input {
+  margin: 1em !important;
+}
+
+#SearchBtn {
+  margin: auto;
 }
