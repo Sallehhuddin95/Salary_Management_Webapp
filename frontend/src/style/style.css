@@ -27,10 +27,31 @@ td {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  padding-top: 0 !important;
 }
 
 .uploader-div {
   width: 100%;
+}
+
+.upload-btn-text {
+  margin-right: 1em;
+}
+
+.upload-btn-div {
+  background-color: gray;
+  border: 1px solid black;
+  padding: 1em;
+}
+
+.upload-btn-group {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+
+.close-btn {
+  margin-bottom: 1em !important;
 }
 
 .salary-input {
