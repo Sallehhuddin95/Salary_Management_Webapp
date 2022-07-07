@@ -41,7 +41,19 @@ function EmployeeTable(props) {
   };
 
   return (
-    <Box sx={{ flexShrink: 0, ml: 2.5 }}>
+    <Box
+      sx={{
+        flexShrink: 0,
+        ml: 2.5,
+        width: {
+          xs: 90, // theme.breakpoints.up('xs')
+          sm: 200, // theme.breakpoints.up('sm')
+          md: 300, // theme.breakpoints.up('md')
+          lg: 400, // theme.breakpoints.up('lg')
+          xl: 500, // theme.breakpoints.up('xl')
+        },
+      }}
+    >
       <IconButton
         onClick={handleFirstPageButtonClick}
         disabled={page === 0}
@@ -128,7 +140,7 @@ export default function CustomPaginationActionsTable() {
 
   return (
     <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 500 }} aria-label="custom pagination table">
+      <Table aria-label="custom pagination table">
         <TableHead>
           <TableRow>
             {" "}

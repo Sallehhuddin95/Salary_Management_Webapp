@@ -22,6 +22,17 @@ td {
   width: 80% !important;
 }
 
+/* Uploader */
+.uploader-modal {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.uploader-div {
+  width: 100%;
+}
+
 .salary-input {
   margin: 1em !important;
 }
@@ -43,4 +54,9 @@ td {
 .modal-form-div > h3 {
   text-align: center;
   margin: auto;
+}
+
+/* sidebar */
+.menu-btn {
+  top: 50vh;
 }

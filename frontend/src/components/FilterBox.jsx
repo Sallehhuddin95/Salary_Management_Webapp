@@ -16,24 +16,23 @@ export default function FilterBox() {
         sx={{ display: "flex", alignItems: "flex-end" }}
         className="filter-div"
       >
-        <Button id="SearchBtn" className="search-btn">
-          <FaSearch sx={{ color: "action.active", mr: 1, my: 0.5 }} />
-        </Button>
-
         <TextField
           id="MinSalary"
           className="salary-input"
           label="Minimum salary"
-          variant="standard"
+          multiline
           placeholder="Enter amount"
         />
         <TextField
           id="MaxSalary"
           className="salary-input"
           label="Maximum salary"
-          variant="standard"
+          multiline
           placeholder="Enter amount"
         />
+        <Button id="SearchBtn" className="search-btn" variant="contained">
+          <FaSearch sx={{ color: "action.active", mr: 1, my: 0.5 }} />
+        </Button>
       </Box>
       {/* <Box sx={{ display: "flex", alignItems: "flex-end" }}> */}
       {/* <AccountCircle sx={{ color: "action.active", mr: 1, my: 0.5 }} /> */}
