@@ -1,4 +1,6 @@
-import * as React from "react";
+import React, { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { getEmployees, reset } from "../features/employee/employeeSlice";
 import PropTypes from "prop-types";
 import { useTheme } from "@mui/material/styles";
 import Button from "@mui/material/Button";
@@ -105,29 +107,18 @@ function createData(id, name, login, salary, action) {
   return { id, name, login, salary, action };
 }
 
-const rows = [
-  createData("00", "JOHN", 3.7, 2000, "del"),
-  createData("01", "JOHN", 25.0, 2000, "del"),
-  createData("02", "JOHN", 16.0, 2000, "del"),
-  createData("03", "JOHN", 6.0, 2000, "del"),
-  createData("04", "JOHN", 16.0, 2000, "del"),
-  createData("05", "JOHN", 3.2, 2000, "del"),
-  createData("06", "JOHN", 9.0, 2000, "del"),
-  createData("07", "JOHN", 0.0, 2000, "del"),
-  createData("08", "JOHN", 26.0, 2000, "del"),
-  createData("09", "JOHN", 0.2, 2000, "del"),
-  createData("10", "JOHN", 0, 2000, "del"),
-  createData("11", "JOHN", 19.0, 2000, "del"),
-  createData("1", "JOHN", 18.0, 2000, "del"),
-].sort((a, b) => (a.salary < b.salary ? -1 : 1));
-
 export default function CustomPaginationActionsTable() {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const dispatch = useDispatch();
+
+  const { employees, isLoading, isError, message } = useSelector(
+    (state) => state.employees
+  );
 
   // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows =
-    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
+    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - employees.length) : 0;
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -137,6 +128,21 @@ export default function CustomPaginationActionsTable() {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
+
+  useEffect(() => {
+    if (isError) {
+      console.log(message);
+    }
+
+    // get goals from backend and put in the goals variable
+    console.log("get employees");
+    dispatch(getEmployees());
+
+    //Reset the goals when we leave the page
+    return () => {
+      dispatch(reset());
+    };
+  }, [isError, dispatch]);
 
   return (
     <TableContainer component={Paper}>
@@ -163,14 +169,17 @@ export default function CustomPaginationActionsTable() {
         </TableHead>
         <TableBody>
           {(rowsPerPage > 0
-            ? rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-            : rows
-          ).map((row) => (
-            <TableRow key={row.name}>
-              <TableCell>{row.id}</TableCell>
-              <TableCell>{row.name}</TableCell>
-              <TableCell>{row.login}</TableCell>
-              <TableCell>{row.salary}</TableCell>
+            ? employees.slice(
+                page * rowsPerPage,
+                page * rowsPerPage + rowsPerPage
+              )
+            : employees
+          ).map((employee) => (
+            <TableRow key={employee.name}>
+              <TableCell>{employee.userID}</TableCell>
+              <TableCell>{employee.name}</TableCell>
+              <TableCell>{employee.login}</TableCell>
+              <TableCell>{employee.salary}</TableCell>
               <TableCell>
                 <ActionModal />
                 {/* <Button>
@@ -196,7 +205,7 @@ export default function CustomPaginationActionsTable() {
             <TablePagination
               rowsPerPageOptions={[5, 10, 25, { label: "All", value: -1 }]}
               colSpan={3}
-              count={rows.length}
+              count={employees.length}
               rowsPerPage={rowsPerPage}
               page={page}
               SelectProps={{
