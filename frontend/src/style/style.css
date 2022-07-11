@@ -1,0 +1,90 @@
+/* Profile */
+.profile-img {
+  border-radius: 50%;
+  width: 20% !important;
+  height: auto;
+  margin: auto;
+}
+
+.profile-div {
+  margin-top: 1.5em;
+}
+
+/* table */
+
+th,
+td {
+  text-align: center !important;
+}
+
+.btn-group {
+  display: flex;
+  flex-direction: row;
+  align-content: space-between;
+}
+
+/* filter */
+.filter-div {
+  width: 80% !important;
+  margin: auto !important;
+}
+
+/* Uploader */
+.uploader-modal {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-top: 0 !important;
+}
+
+.uploader-div {
+  width: 100%;
+}
+
+.upload-btn-text {
+  margin-right: 1em;
+}
+
+.upload-btn-div {
+  background-color: #f5f5f5;
+  border: 1px solid black;
+  padding: 1em;
+}
+
+.upload-btn-group {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+
+.close-btn {
+  margin-bottom: 1em !important;
+}
+
+.salary-input {
+  margin: 1em !important;
+}
+
+#SearchBtn {
+  margin: auto;
+}
+
+/* form */
+.modal-form-div {
+  display: flex;
+  flex-direction: row;
+}
+
+.modal-form-div > button {
+  width: 2em;
+}
+
+.modal-form-div > h3 {
+  text-align: center;
+  margin: auto;
+}
+
+/* sidebar */
+.menu-btn {
+  top: 50vh;
+}
