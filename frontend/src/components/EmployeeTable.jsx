@@ -197,10 +197,6 @@ export default function CustomPaginationActionsTable() {
             <FaSearch sx={{ color: "action.active", mr: 1, my: 0.5 }} />
           </Button>
         </Box>
-        {/* <Box sx={{ display: "flex", alignItems: "flex-end" }}> */}
-        {/* <AccountCircle sx={{ color: "action.active", mr: 1, my: 0.5 }} /> */}
-
-        {/* </Box> */}
       </Box>
       <TableContainer component={Paper}>
         <Table aria-label="custom pagination table">
