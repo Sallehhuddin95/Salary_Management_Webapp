@@ -22,8 +22,9 @@ const getEmployees = async () => {
 
 //Delete employee
 
-const deleteEmployee = async (employeeID) => {
-  const response = await axios.delete(API_URL + employeeID);
+const deleteEmployee = async (id) => {
+  console.log("userID: " + id);
+  const response = await axios.delete(API_URL + id);
   console.log("data delete: " + response.data);
 
   return response.data;

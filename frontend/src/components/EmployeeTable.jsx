@@ -181,7 +181,7 @@ export default function CustomPaginationActionsTable() {
               <TableCell>{employee.login}</TableCell>
               <TableCell>{employee.salary}</TableCell>
               <TableCell>
-                <ActionModal />
+                <ActionModal id={employee._id} />
                 {/* <Button>
                   <ActionModal />
                   <FaRegEdit />

@@ -17,6 +17,12 @@ td {
   text-align: center !important;
 }
 
+.btn-group {
+  display: flex;
+  flex-direction: row;
+  align-content: space-between;
+}
+
 /* filter */
 .filter-div {
   width: 80% !important;
