@@ -13,8 +13,14 @@ const createEmployees = async (employeeData) => {
 };
 
 //Get employees
-
 const getEmployees = async () => {
+  const response = await axios.get(API_URL);
+
+  return response.data;
+};
+
+//Filter employees
+const filterEmployees = async () => {
   const response = await axios.get(API_URL);
 
   return response.data;
@@ -53,6 +59,7 @@ const employeeService = {
   getEmployees,
   deleteEmployee,
   updateEmployee,
+  filterEmployees,
 };
 
 export default employeeService;

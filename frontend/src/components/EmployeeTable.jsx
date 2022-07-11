@@ -1,10 +1,12 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getEmployees, reset } from "../features/employee/employeeSlice";
+import Box from "@mui/material/Box";
+import TextField from "@mui/material/TextField";
+import { FaSearch } from "react-icons/fa";
+import { Button } from "@mui/material";
 import PropTypes from "prop-types";
 import { useTheme } from "@mui/material/styles";
-import Button from "@mui/material/Button";
-import Box from "@mui/material/Box";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableHead from "@mui/material/TableHead";
@@ -21,6 +23,9 @@ import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
 import LastPageIcon from "@mui/icons-material/LastPage";
 import { FaTrashAlt, FaRegEdit } from "react-icons/fa";
 import ActionModal from "./ActionModal";
+
+const MinSalary = 2000;
+const MaxSalary = 7000;
 
 function EmployeeTable(props) {
   const theme = useTheme();
@@ -103,18 +108,34 @@ EmployeeTable.propTypes = {
   rowsPerPage: PropTypes.number.isRequired,
 };
 
-function createData(id, name, login, salary, action) {
-  return { id, name, login, salary, action };
-}
-
 export default function CustomPaginationActionsTable() {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const dispatch = useDispatch();
-
+  const [min, setMin] = useState();
+  const [max, setMax] = useState();
   const { employees, isLoading, isError, message } = useSelector(
     (state) => state.employees
   );
+
+  const [filteredEmployee, setFilteredEmployee] = useState(employees);
+
+  const handleFilter = () => {
+    var filterEmployee;
+    if (min && max) {
+      filterEmployee = employees.filter(
+        (employee) => employee.salary <= max && employee.salary >= min
+      );
+    } else if (min && !max) {
+      filterEmployee = employees.filter((employee) => employee.salary >= min);
+    } else if (max && !min) {
+      filterEmployee = employees.filter((employee) => employee.salary <= max);
+    } else {
+      filterEmployee = employees;
+    }
+
+    setFilteredEmployee(filterEmployee);
+  };
 
   // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows =
@@ -145,44 +166,82 @@ export default function CustomPaginationActionsTable() {
   }, [isError, dispatch]);
 
   return (
-    <TableContainer component={Paper}>
-      <Table aria-label="custom pagination table">
-        <TableHead>
-          <TableRow>
-            {" "}
-            <TableCell component="th" scope="row">
-              Id
-            </TableCell>
-            <TableCell component="th" scope="row">
-              Name
-            </TableCell>
-            <TableCell component="th" scope="row">
-              Login
-            </TableCell>
-            <TableCell component="th" scope="row">
-              Salary
-            </TableCell>
-            <TableCell component="th" scope="row">
-              Action
-            </TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {(rowsPerPage > 0
-            ? employees.slice(
-                page * rowsPerPage,
-                page * rowsPerPage + rowsPerPage
-              )
-            : employees
-          ).map((employee) => (
-            <TableRow key={employee.name}>
-              <TableCell>{employee.userID}</TableCell>
-              <TableCell>{employee.name}</TableCell>
-              <TableCell>{employee.login}</TableCell>
-              <TableCell>{employee.salary}</TableCell>
-              <TableCell>
-                <ActionModal id={employee._id} />
-                {/* <Button>
+    <>
+      <Box sx={{ "& > :not(style)": { m: 1 } }}>
+        <Box
+          sx={{ display: "flex", alignItems: "flex-end" }}
+          className="filter-div"
+        >
+          <TextField
+            id="MinSalary"
+            className="salary-input"
+            label="Minimum salary"
+            multiline
+            placeholder="Enter amount"
+            value={min}
+            onChange={(e) => setMin(e.target.value)}
+          />
+          <TextField
+            id="MaxSalary"
+            className="salary-input"
+            label="Maximum salary"
+            multiline
+            placeholder="Enter amount"
+            value={max}
+            onChange={(e) => setMax(e.target.value)}
+          />
+          <Button
+            id="SearchBtn"
+            className="search-btn"
+            variant="contained"
+            onClick={handleFilter}
+          >
+            <FaSearch sx={{ color: "action.active", mr: 1, my: 0.5 }} />
+          </Button>
+        </Box>
+        {/* <Box sx={{ display: "flex", alignItems: "flex-end" }}> */}
+        {/* <AccountCircle sx={{ color: "action.active", mr: 1, my: 0.5 }} /> */}
+
+        {/* </Box> */}
+      </Box>
+      <TableContainer component={Paper}>
+        <Table aria-label="custom pagination table">
+          <TableHead>
+            <TableRow>
+              {" "}
+              <TableCell component="th" scope="row">
+                Id
+              </TableCell>
+              <TableCell component="th" scope="row">
+                Name
+              </TableCell>
+              <TableCell component="th" scope="row">
+                Login
+              </TableCell>
+              <TableCell component="th" scope="row">
+                Salary
+              </TableCell>
+              <TableCell component="th" scope="row">
+                Action
+              </TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {(rowsPerPage > 0
+              ? filteredEmployee.slice(
+                  page * rowsPerPage,
+                  page * rowsPerPage + rowsPerPage
+                )
+              : filteredEmployee
+            ).map((employee) => (
+              <TableRow key={employee.name}>
+                <TableCell>{employee.userID}</TableCell>
+                <TableCell>{employee.name}</TableCell>
+                <TableCell>{employee.login}</TableCell>
+                <TableCell>${employee.salary}</TableCell>
+                <TableCell>
+                  <ActionModal id={employee._id} />
+                  {/* <Button>
                   <ActionModal />
                   <FaRegEdit />
                 </Button>
@@ -190,37 +249,38 @@ export default function CustomPaginationActionsTable() {
                   <ActionModal />
                   <FaTrashAlt />
                 </Button> */}
-              </TableCell>
-            </TableRow>
-          ))}
+                </TableCell>
+              </TableRow>
+            ))}
 
-          {emptyRows > 0 && (
-            <TableRow style={{ height: 53 * emptyRows }}>
-              <TableCell colSpan={6} />
+            {emptyRows > 0 && (
+              <TableRow style={{ height: 53 * emptyRows }}>
+                <TableCell colSpan={6} />
+              </TableRow>
+            )}
+          </TableBody>
+          <TableFooter>
+            <TableRow>
+              <TablePagination
+                rowsPerPageOptions={[5, 10, 25, { label: "All", value: -1 }]}
+                colSpan={3}
+                count={employees.length}
+                rowsPerPage={rowsPerPage}
+                page={page}
+                SelectProps={{
+                  inputProps: {
+                    "aria-label": "rows per page",
+                  },
+                  native: true,
+                }}
+                onPageChange={handleChangePage}
+                onRowsPerPageChange={handleChangeRowsPerPage}
+                ActionsComponent={EmployeeTable}
+              />
             </TableRow>
-          )}
-        </TableBody>
-        <TableFooter>
-          <TableRow>
-            <TablePagination
-              rowsPerPageOptions={[5, 10, 25, { label: "All", value: -1 }]}
-              colSpan={3}
-              count={employees.length}
-              rowsPerPage={rowsPerPage}
-              page={page}
-              SelectProps={{
-                inputProps: {
-                  "aria-label": "rows per page",
-                },
-                native: true,
-              }}
-              onPageChange={handleChangePage}
-              onRowsPerPageChange={handleChangeRowsPerPage}
-              ActionsComponent={EmployeeTable}
-            />
-          </TableRow>
-        </TableFooter>
-      </Table>
-    </TableContainer>
+          </TableFooter>
+        </Table>
+      </TableContainer>
+    </>
   );
 }

@@ -41,7 +41,7 @@ export default function Dashboard() {
         sx={{ flexGrow: 1, bgcolor: "background.default", p: 3 }}
       >
         {/* <Toolbar /> */}
-        <FilterBox />
+        {/* <FilterBox /> */}
         <h2>Employees</h2>
         <EmployeeTable />
       </Box>

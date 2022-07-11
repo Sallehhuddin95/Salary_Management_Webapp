@@ -65,10 +65,10 @@ export default function BasicModal(props) {
         >
           <Box sx={style}>
             <div className="modal-form-div">
-              <IconButton onClick={handleClose} aria-label="edit">
+              {/* <IconButton onClick={handleClose} aria-label="edit">
                 <FaRegWindowClose />
-              </IconButton>
-              <h3 className="form-title">Delete</h3>
+              </IconButton> */}
+              <h3 className="form-title">Delete Employee</h3>
             </div>
             <p>Are you sure to delete this employee?</p>
             <div className="btn-group">
@@ -90,10 +90,10 @@ export default function BasicModal(props) {
         >
           <Box sx={style}>
             <div className="modal-form-div">
-              <IconButton onClick={handleClose} aria-label="edit">
+              {/* <IconButton onClick={handleClose} aria-label="edit">
                 <FaRegWindowClose />
-              </IconButton>
-              <h3 className="form-title">Edit</h3>
+              </IconButton> */}
+              <h3 className="form-title">Edit Details</h3>
             </div>
             <ActionForm id={props.id} />
           </Box>
