@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Modal from "@mui/material/Modal";
-import { FaTrashAlt, FaRegEdit, FaRegWindowClose } from "react-icons/fa";
+import { FaTrashAlt, FaRegEdit } from "react-icons/fa";
 import IconButton from "@mui/material/IconButton";
 import Stack from "@mui/material/Stack";
 import { useDispatch, useSelector } from "react-redux";
-import { getEmployees, reset } from "../features/employee/employeeSlice";
+import { getEmployees } from "../features/employee/employeeSlice";
 import {
   deleteEmployee,
   updateEmployee,
@@ -26,9 +26,7 @@ const style = {
 };
 
 export default function BasicModal(props) {
-  const { employees, isLoading, isError, message } = useSelector(
-    (state) => state.employees
-  );
+  const { employees } = useSelector((state) => state.employees);
 
   const employee = employees.filter((employee) => employee._id === props.id);
   const [open, setOpen] = useState(false);
@@ -49,6 +47,7 @@ export default function BasicModal(props) {
     setOpen(true);
   };
 
+  // delete and update data
   const handleDelete = () => {
     console.log(props.id);
     dispatch(deleteEmployee(props.id));
@@ -56,8 +55,9 @@ export default function BasicModal(props) {
     setOpen(false);
   };
 
+  // edit and update data
   const handleEdit = (e) => {
-    // e.preventDefault();
+    e.preventDefault();
     dispatch(
       updateEmployee({
         name,
@@ -93,9 +93,6 @@ export default function BasicModal(props) {
         >
           <Box sx={style}>
             <div className="modal-form-div">
-              {/* <IconButton onClick={handleClose} aria-label="edit">
-                <FaRegWindowClose />
-              </IconButton> */}
               <h3 className="form-title my-3">Delete Employee</h3>
             </div>
             <p>Are you sure to delete this employee?</p>
@@ -123,9 +120,6 @@ export default function BasicModal(props) {
         >
           <Box sx={style}>
             <div className="modal-form-div">
-              {/* <IconButton onClick={handleClose} aria-label="edit">
-                <FaRegWindowClose />
-              </IconButton> */}
               <h3 className="form-title my-3">Edit Details</h3>
             </div>
             <Box sx={{ flexShrink: 0, ml: 2.5 }}>

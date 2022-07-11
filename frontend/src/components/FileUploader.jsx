@@ -40,18 +40,12 @@ export default function FileUploader(props) {
   // State to store parsed data
   const [parsedData, setParsedData] = useState([]);
 
-  //State to store table Column name
-  const [tableRows, setTableRows] = useState([]);
-
-  //State to store the values
-  const [values, setValues] = useState([]);
-
   const dispatch = useDispatch();
 
   const changeHandler = (event) => {
     setSelectedFile(event.target.files[0]);
     setIsFilePicked(true);
-    // Passing file data (event.target.files[0]) to parse using Papa.parse
+    // parse using Papa.parse
     Papa.parse(event.target.files[0], {
       header: true,
       skipEmptyLines: true,
@@ -65,15 +59,7 @@ export default function FileUploader(props) {
           valuesArray.push(Object.values(d));
         });
 
-        // Parsed Data Response in array format
         setParsedData(results.data);
-
-        // Filtered Column Names
-        setTableRows(rowsArray[0]);
-
-        // Filtered Values
-        setValues(valuesArray);
-        // console.log(parsedData);
         setDisable(false);
       },
     });
@@ -157,13 +143,6 @@ export default function FileUploader(props) {
                 <FaFileUpload />
               </div>
             )}
-            {/* <Button
-              variant="contained"
-              component="span"
-              onClick={handleSubmission}
-            >
-              Upload
-            </Button> */}
             <div className="mt-3 upload-btn-group">
               <Button
                 variant="contained"
