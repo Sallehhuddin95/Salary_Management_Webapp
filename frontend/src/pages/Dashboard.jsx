@@ -6,7 +6,7 @@ import CssBaseline from "@mui/material/CssBaseline";
 import Toolbar from "@mui/material/Toolbar";
 import Sidebar from "../components/Sidebar";
 import EmployeeTable from "../components/EmployeeTable";
-import FilterBox from "../components/FilterBox";
+// import FilterBox from "../components/FilterBox";
 
 const drawerWidth = 240;
 

@@ -21,11 +21,7 @@ import FirstPageIcon from "@mui/icons-material/FirstPage";
 import KeyboardArrowLeft from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
 import LastPageIcon from "@mui/icons-material/LastPage";
-import { FaTrashAlt, FaRegEdit } from "react-icons/fa";
 import ActionModal from "./ActionModal";
-
-const MinSalary = 2000;
-const MaxSalary = 7000;
 
 function EmployeeTable(props) {
   const theme = useTheme();
@@ -110,7 +106,7 @@ EmployeeTable.propTypes = {
 
 export default function CustomPaginationActionsTable() {
   const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
   const dispatch = useDispatch();
   const [min, setMin] = useState();
   const [max, setMax] = useState();
@@ -118,7 +114,8 @@ export default function CustomPaginationActionsTable() {
     (state) => state.employees
   );
 
-  const [filteredEmployee, setFilteredEmployee] = useState(employees);
+  const [filteredEmployee, setFilteredEmployee] = useState();
+  const [isFilter, setIsFiter] = useState(false);
 
   const handleFilter = () => {
     var filterEmployee;
@@ -135,6 +132,7 @@ export default function CustomPaginationActionsTable() {
     }
 
     setFilteredEmployee(filterEmployee);
+    setIsFiter(true);
   };
 
   // Avoid a layout jump when reaching the last page with empty rows.
@@ -226,39 +224,60 @@ export default function CustomPaginationActionsTable() {
               </TableCell>
             </TableRow>
           </TableHead>
-          <TableBody>
-            {(rowsPerPage > 0
-              ? filteredEmployee.slice(
-                  page * rowsPerPage,
-                  page * rowsPerPage + rowsPerPage
-                )
-              : filteredEmployee
-            ).map((employee) => (
-              <TableRow key={employee.name}>
-                <TableCell>{employee.userID}</TableCell>
-                <TableCell>{employee.name}</TableCell>
-                <TableCell>{employee.login}</TableCell>
-                <TableCell>${employee.salary}</TableCell>
-                <TableCell>
-                  <ActionModal id={employee._id} />
-                  {/* <Button>
-                  <ActionModal />
-                  <FaRegEdit />
-                </Button>
-                <Button>
-                  <ActionModal />
-                  <FaTrashAlt />
-                </Button> */}
-                </TableCell>
-              </TableRow>
-            ))}
+          {isFilter ? (
+            <TableBody>
+              {(rowsPerPage > 0
+                ? filteredEmployee.slice(
+                    page * rowsPerPage,
+                    page * rowsPerPage + rowsPerPage
+                  )
+                : filteredEmployee
+              ).map((employee) => (
+                <TableRow key={employee.name}>
+                  <TableCell>{employee.userID}</TableCell>
+                  <TableCell>{employee.name}</TableCell>
+                  <TableCell>{employee.login}</TableCell>
+                  <TableCell>${employee.salary}</TableCell>
+                  <TableCell>
+                    <ActionModal id={employee._id} />
+                  </TableCell>
+                </TableRow>
+              ))}
 
-            {emptyRows > 0 && (
-              <TableRow style={{ height: 53 * emptyRows }}>
-                <TableCell colSpan={6} />
-              </TableRow>
-            )}
-          </TableBody>
+              {emptyRows > 0 && (
+                <TableRow style={{ height: 53 * emptyRows }}>
+                  <TableCell colSpan={6} />
+                </TableRow>
+              )}
+            </TableBody>
+          ) : (
+            <TableBody>
+              {(rowsPerPage > 0
+                ? employees.slice(
+                    page * rowsPerPage,
+                    page * rowsPerPage + rowsPerPage
+                  )
+                : employees
+              ).map((employee) => (
+                <TableRow key={employee.name}>
+                  <TableCell>{employee.userID}</TableCell>
+                  <TableCell>{employee.name}</TableCell>
+                  <TableCell>{employee.login}</TableCell>
+                  <TableCell>${employee.salary}</TableCell>
+                  <TableCell>
+                    <ActionModal id={employee._id} />
+                  </TableCell>
+                </TableRow>
+              ))}
+
+              {emptyRows > 0 && (
+                <TableRow style={{ height: 53 * emptyRows }}>
+                  <TableCell colSpan={6} />
+                </TableRow>
+              )}
+            </TableBody>
+          )}
+
           <TableFooter>
             <TableRow>
               <TablePagination
