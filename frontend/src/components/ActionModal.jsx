@@ -1,15 +1,16 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
+import TextField from "@mui/material/TextField";
 import Modal from "@mui/material/Modal";
-import ActionForm from "./ActionForm";
 import { FaTrashAlt, FaRegEdit, FaRegWindowClose } from "react-icons/fa";
 import IconButton from "@mui/material/IconButton";
 import Stack from "@mui/material/Stack";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { getEmployees, reset } from "../features/employee/employeeSlice";
 import {
   deleteEmployee,
-  employeeSlice,
+  updateEmployee,
 } from "../features/employee/employeeSlice";
 
 const style = {
@@ -25,7 +26,15 @@ const style = {
 };
 
 export default function BasicModal(props) {
+  const { employees, isLoading, isError, message } = useSelector(
+    (state) => state.employees
+  );
+
+  const employee = employees.filter((employee) => employee._id === props.id);
   const [open, setOpen] = useState(false);
+  const [name, setName] = useState(employee[0].name);
+  const [login, setLogin] = useState(employee[0].login);
+  const [salary, setSalary] = useState(employee[0].salary);
   const handleOpen = () => setOpen(true);
   const dispatch = useDispatch();
   const handleClose = () => {
@@ -43,6 +52,25 @@ export default function BasicModal(props) {
   const handleDelete = () => {
     console.log(props.id);
     dispatch(deleteEmployee(props.id));
+    dispatch(getEmployees());
+    setOpen(false);
+  };
+
+  const handleEdit = (e) => {
+    // e.preventDefault();
+    dispatch(
+      updateEmployee({
+        name,
+        login,
+        salary,
+        id: props.id,
+      })
+    );
+    dispatch(getEmployees());
+    setOpen(false);
+  };
+
+  const handleCancel = () => {
     setOpen(false);
   };
 
@@ -68,14 +96,19 @@ export default function BasicModal(props) {
               {/* <IconButton onClick={handleClose} aria-label="edit">
                 <FaRegWindowClose />
               </IconButton> */}
-              <h3 className="form-title">Delete Employee</h3>
+              <h3 className="form-title my-3">Delete Employee</h3>
             </div>
             <p>Are you sure to delete this employee?</p>
-            <div className="btn-group">
-              <Button onClick={handleDelete} variant="contained">
+            <div className="mt-3">
+              <Button onClick={handleDelete} variant="contained" fullWidth>
                 Yes
               </Button>
-              <Button onClick={handleClose} variant="contained">
+              <Button
+                className="mt-3"
+                onClick={handleClose}
+                variant="contained"
+                fullWidth
+              >
                 No
               </Button>
             </div>
@@ -93,9 +126,56 @@ export default function BasicModal(props) {
               {/* <IconButton onClick={handleClose} aria-label="edit">
                 <FaRegWindowClose />
               </IconButton> */}
-              <h3 className="form-title">Edit Details</h3>
+              <h3 className="form-title my-3">Edit Details</h3>
             </div>
-            <ActionForm id={props.id} />
+            <Box sx={{ flexShrink: 0, ml: 2.5 }}>
+              <form className="form" onSubmit={handleEdit}>
+                <TextField
+                  onChange={(e) => setName(e.target.value)}
+                  value={name}
+                  className="mt-2"
+                  label="Name"
+                  type="text"
+                  fullWidth
+                />
+                <TextField
+                  onChange={(e) => setLogin(e.target.value)}
+                  value={login}
+                  className="mt-2"
+                  label="Login"
+                  type="text"
+                  fullWidth
+                />
+                <TextField
+                  onChange={(e) => setSalary(e.target.value)}
+                  value={salary}
+                  className="mt-2"
+                  label="Salary"
+                  type="text"
+                  fullWidth
+                />
+                <div className="mt-3">
+                  <Button
+                    type="submit"
+                    variant="contained"
+                    color="primary"
+                    fullWidth
+                  >
+                    Save
+                  </Button>
+                  <Button
+                    type="submit"
+                    variant="contained"
+                    color="primary"
+                    onClick={handleCancel}
+                    fullWidth
+                    className="mt-3"
+                  >
+                    Cancel
+                  </Button>
+                </div>
+              </form>
+            </Box>
           </Box>
         </Modal>
       )}
