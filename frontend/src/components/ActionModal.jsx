@@ -57,7 +57,7 @@ export default function BasicModal(props) {
 
   // edit and update data
   const handleEdit = (e) => {
-    e.preventDefault();
+    // e.preventDefault();
     dispatch(
       updateEmployee({
         name,

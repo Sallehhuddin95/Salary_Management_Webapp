@@ -2,7 +2,7 @@
 
 ## Frontend Technology:
 
-React.js
+React.js and REDUX
 
 ## Backend Technology
 
