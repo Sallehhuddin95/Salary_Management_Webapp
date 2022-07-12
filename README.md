@@ -45,3 +45,13 @@ In the project directory (backend folder), you can:
 Here is the sample of the app
 
 ![plot](./Sample_App_Image.png)
+
+### Upload a csv file
+
+- Click the `Upload CSV File button` on the left, and then popup will appear.
+
+- The csv file must have headers (Id, login, name, salary) as shown below
+
+![plot](./CSV_File_Sample.png)
+
+- Choose the file to upload and press save button.
